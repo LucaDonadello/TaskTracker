@@ -1,50 +1,38 @@
 import React, { useState } from "react";
 
 const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
-  const handleEdit = (idea) => {
-    const newTitle = prompt("Enter new title:", idea.title);
-    const newStatus = prompt(
-      "Enter new status (Completed, In Progress, On Hold):",
-      idea.status
-    );
-    const newDesc = prompt("Enter new description:", idea.ideadesc);
-
-    if (
-      newTitle &&
-      newStatus &&
-      ["Completed", "In Progress", "On Hold"].includes(newStatus)
-    ) {
-      editIdea(idea.id, {
-        title: newTitle,
-        status: newStatus,
-        ideaDesc: newDesc,
-      });
-    } else {
-      alert("Invalid input. Please ensure all fields are filled correctly.");
-    }
-  };
-
-  const handleAdd = () => {
-    const title = prompt("Enter title:");
-    const status = prompt("Enter status (Completed, In Progress, On Hold):");
-    const ideaDesc = prompt("Enter description:");
-
-    if (
-      title &&
-      status &&
-      ideaDesc &&
-      ["Completed", "In Progress", "On Hold"].includes(status)
-    ) {
-      addIdea({ title, status, ideaDesc });
-    } else {
-      alert("Invalid input. Please ensure all fields are filled correctly.");
-    }
-  };
-
   const [visibleIdeaId, setVisibleIdeaId] = useState(null);
+  const [editedDescriptions, setEditedDescriptions] = useState({});
 
   const toggleVisibility = (id) => {
     setVisibleIdeaId(visibleIdeaId === id ? null : id);
+  };
+
+  const handleDescriptionChange = (id, newDescription) => {
+    setEditedDescriptions((prev) => ({
+      ...prev,
+      [id]: newDescription,
+    }));
+  };
+
+  const handleSaveDescription = (idea) => {
+    console.log(idea);
+    if (editedDescriptions[idea.id]) {
+      editIdea(idea.id, {
+        title: idea.title,
+        status: idea.status,
+        ideaDesc: editedDescriptions[idea.id],
+      });
+    }
+    toggleVisibility(idea.id);
+  };
+
+  const handleAdd = () => {
+    addIdea({
+      title: "New Idea",
+      status: "In Progress",
+      ideaDesc: "Placeholder description",
+    });
   };
 
   return (
@@ -53,7 +41,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
         <div className="flex justify-between">
           <p className="text-4xl font-bold mb-4">Ideas: </p>
           <button
-            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
             onClick={handleAdd}
           >
             ADD IDEA
@@ -86,7 +74,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                   </div>
                   <div className="flex gap-1">
                     <button
-                      className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                      className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
                       onClick={() => toggleVisibility(idea.id)}
                     >
                       {visibleIdeaId === idea.id
@@ -94,13 +82,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                         : "See Description"}
                     </button>
                     <button
-                      className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-                      onClick={() => handleEdit(idea)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                      className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
                       onClick={() => deleteIdea(idea.id)}
                     >
                       Delete
@@ -108,12 +90,22 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                   </div>
                 </div>
               </div>
-              {/* Conditional rendering */}
               {visibleIdeaId === idea.id && (
                 <div className="mt-4">
-                  <div>
-                    {idea.ideadesc}
-                  </div>
+                  <textarea
+                    className="border rounded p-2 w-full"
+                    rows="4"
+                    value={editedDescriptions[idea.id] || idea.ideadesc}
+                    onChange={(e) =>
+                      handleDescriptionChange(idea.id, e.target.value)
+                    }
+                  />
+                  <button
+                    className="mt-2 bg-green-600 hover:bg-green-800 text-white font-bold py-1 px-2 rounded"
+                    onClick={() => handleSaveDescription(idea)}
+                  >
+                    Save
+                  </button>
                 </div>
               )}
             </div>

@@ -8,25 +8,42 @@ const App = () => {
   const getIdeas = () => {
     fetch("/ideas")
       .then((res) => res.json())
-      .then((data) => setIdeas(data.result));
+      .then((data) => {
+        // Sort the ideas by id 
+        const sortedIdeas = data.result.sort((a, b) => a.id - b.id);
+        setIdeas(sortedIdeas);
+      });
   };
+  
 
   const getCompletedIdeas = () => {
     fetch("/ideas/completed")
-      .then((res) => res.json())
-      .then((data) => setIdeas(data.result));
+    .then((res) => res.json())
+    .then((data) => {
+      // Sort the ideas by id 
+      const sortedIdeas = data.result.sort((a, b) => a.id - b.id);
+      setIdeas(sortedIdeas);
+    });
   };
 
   const getOnHoldIdeas = () => {
     fetch("/ideas/onHold")
-      .then((res) => res.json())
-      .then((data) => setIdeas(data.result));
+    .then((res) => res.json())
+    .then((data) => {
+      // Sort the ideas by id 
+      const sortedIdeas = data.result.sort((a, b) => a.id - b.id);
+      setIdeas(sortedIdeas);
+    });
   };
 
   const getInProgressIdeas = () => {
     fetch("/ideas/inProgress")
-      .then((res) => res.json())
-      .then((data) => setIdeas(data.result));
+    .then((res) => res.json())
+    .then((data) => {
+      // Sort the ideas by id 
+      const sortedIdeas = data.result.sort((a, b) => a.id - b.id);
+      setIdeas(sortedIdeas);
+    });
   };
 
   const deleteIdea = (id) => {
@@ -35,7 +52,7 @@ const App = () => {
     })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
+        // Change based on which ideas are being displayed
         getIdeas();
       });
   };
@@ -50,7 +67,7 @@ const App = () => {
     })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
+        // Change based on which ideas are being displayed
         getIdeas();
       });
   };
@@ -65,7 +82,7 @@ const App = () => {
     })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
+        // Change based on which ideas are being displayed
         getIdeas();
       });
   };

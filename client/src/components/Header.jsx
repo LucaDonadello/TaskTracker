@@ -13,25 +13,25 @@ const Header = ({
       </div>
       <div className="justify-between space-x-4">
         <button
-          className="text-2xl bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-2 border border-gray-400 rounded shadow"
+          className="text-2xl bg-white hover:bg-grey-100 text-grey-800 font-semibold py-2 px-2 border-b-4 border-grey-600 rounded shadow active:bg-gray-300 active:border-grey-600 active:border-b-2 transition-all duration-200"
           onClick={() => getInOnHoldIdeas()}
         >
           On Hold
         </button>
         <button
-          className="text-2xl bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-2 border border-gray-400 rounded shadow"
+          className="text-2xl bg-white hover:bg-grey-100 text-grey-800 font-semibold py-2 px-2 border-b-4 border-grey-600 rounded shadow active:bg-gray-300 active:border-grey-600 active:border-b-2 transition-all duration-200"
           onClick={() => getInProgressIdeas()}
         >
           In Progres
         </button>
         <button
-          className="text-2xl bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-2 border border-gray-400 rounded shadow"
+          className="text-2xl bg-white hover:bg-grey-100 text-grey-800 font-semibold py-2 px-2 border-b-4 border-grey-600 rounded shadow active:bg-gray-300 active:border-grey-600 active:border-b-2 transition-all duration-200"
           onClick={() => getCompletedIdeas()}
         >
           Completed
         </button>
         <button
-          className="text-2xl bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-2 border border-gray-400 rounded shadow"
+          className="text-2xl bg-white hover:bg-grey-100 text-grey-800 font-semibold py-2 px-2 border-b-4 border-grey-600 rounded shadow active:bg-gray-300 active:border-grey-600 active:border-b-2 transition-all duration-200"
           onClick={() => getIdeas()}
         >
           All
