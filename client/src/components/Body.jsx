@@ -3,6 +3,14 @@ import React, { useState } from "react";
 const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
   const [visibleIdeaId, setVisibleIdeaId] = useState(null);
   const [editedDescriptions, setEditedDescriptions] = useState({});
+  const [selectedStatuses, setSelectedStatuses] = useState({});
+  const [editedTitle, setEditedTitle] = useState({});
+
+  const options = [
+    { value: "In Progress", label: "In Progress" },
+    { value: "On Hold", label: "On Hold" },
+    { value: "Completed", label: "Completed" },
+  ];
 
   const toggleVisibility = (id) => {
     setVisibleIdeaId(visibleIdeaId === id ? null : id);
@@ -16,14 +24,13 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
   };
 
   const handleSaveDescription = (idea) => {
-    console.log(idea);
-    if (editedDescriptions[idea.id]) {
-      editIdea(idea.id, {
-        title: idea.title,
-        status: idea.status,
-        ideaDesc: editedDescriptions[idea.id],
-      });
-    }
+    const updatedIdea = {
+      title: editedTitle[idea.id] || idea.title, // Use the edited title if it exists
+      status: idea.status,
+      ideaDesc: editedDescriptions[idea.id] || idea.ideadesc,
+    };
+
+    editIdea(idea.id, updatedIdea); // Save the updated idea
     toggleVisibility(idea.id);
   };
 
@@ -33,6 +40,26 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
       status: "In Progress",
       ideaDesc: "Placeholder description",
     });
+  };
+
+  const handleStatusChange = (idea, newStatus) => {
+    setSelectedStatuses((prev) => ({
+      ...prev,
+      [idea.id]: newStatus,
+    }));
+    const updatedIdea = ideas.find((i) => i.id === idea.id);
+    editIdea(idea.id, {
+      ...updatedIdea,
+      status: newStatus,
+      ideaDesc: idea.ideadesc,
+    });
+  };
+
+  const handleTitleChange = (idea, newTitle) => {
+    setEditedTitle((prev) => ({
+      ...prev,
+      [idea.id]: newTitle,
+    }));
   };
 
   return (
@@ -59,19 +86,33 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
               className="p-4 border rounded-lg shadow-md bg-white"
             >
               <div className="flex justify-between items-center">
-                <div className="text-lg">{idea.title}</div>
+                <input
+                  value={editedTitle[idea.id] !== undefined ? editedTitle[idea.id] : idea.title}
+                  onClick={() => toggleVisibility(idea.id)}
+                  onChange={(e) => handleTitleChange(idea, e.target.value)}
+                  type="text"
+                  id={idea.id}
+                  className="text-lg text-black"
+                />
                 <div className="flex items-center gap-5">
-                  <div
+                  <select
                     className={`text-sm font-semibold px-2 py-2 rounded ${
-                      idea.status === "Completed"
+                      (selectedStatuses[idea.id] || idea.status) === "Completed"
                         ? "bg-green-100 text-green-800"
-                        : idea.status === "On Hold"
+                        : (selectedStatuses[idea.id] || idea.status) ===
+                          "On Hold"
                         ? "bg-yellow-100 text-yellow-800"
                         : "bg-blue-100 text-blue-800"
                     }`}
+                    value={selectedStatuses[idea.id] || idea.status}
+                    onChange={(e) => handleStatusChange(idea, e.target.value)}
                   >
-                    {idea.status}
-                  </div>
+                    {options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
                   <div className="flex gap-1">
                     <button
                       className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
@@ -95,7 +136,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                   <textarea
                     className="border rounded p-2 w-full"
                     rows="4"
-                    value={editedDescriptions[idea.id] || idea.ideadesc}
+                    value={editedDescriptions[idea.id] !== undefined ? editedDescriptions[idea.id] : idea.ideadesc}
                     onChange={(e) =>
                       handleDescriptionChange(idea.id, e.target.value)
                     }
