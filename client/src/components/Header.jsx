@@ -6,37 +6,77 @@ const Header = ({
   getInProgressIdeas,
   getIdeas,
 }) => {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   return (
-    <div className="bg-indigo-800 flex justify-between p-6">
-      <div className="flex justify-left mb-6 text-5xl font-serif text-white">
-        <p>Ideas Tracker</p>
+    <div className="relative flex flex-col">
+      <div className="flex justify-between items-center text-black py-6 px-8 md:px-8 bg-white drop-shadow-md">
+        <div className="justify justify-left text-5xl font-serif">
+          <p>Ideas Tracker</p>
+        </div>
+        <ul className="hidden xl:flex items-center gap-12 font-semibold text-base">
+          <li
+            className="p-3 hover:bg-indigo-700 hover:text-white rounded-md transition-all duration-200"
+            onClick={() => getInOnHoldIdeas()}
+          >
+            On Hold
+          </li>
+          <li
+            className="p-3 hover:bg-indigo-700 hover:text-white rounded-md transition-all duration-200"
+            onClick={() => getInProgressIdeas()}
+          >
+            In Progress
+          </li>
+          <li
+            className="p-3 hover:bg-indigo-700 hover:text-white rounded-md transition-all duration-200"
+            onClick={() => getCompletedIdeas()}
+          >
+            Completed
+          </li>
+          <li
+            className="p-3 hover:bg-indigo-700 hover:text-white rounded-md transition-all duration-200"
+            onClick={() => getIdeas()}
+          >
+            All
+          </li>
+        </ul>
+        <i
+          className="bx bx-menu xl:hidden block text-5xl cursor-pointer"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        ></i>
       </div>
-      <div className="justify-between space-x-4">
-        <button
-          className="text-2xl bg-white hover:bg-grey-100 text-grey-800 font-semibold py-2 px-2 border-b-4 border-grey-600 rounded shadow active:bg-gray-300 active:border-grey-600 active:border-b-2 transition-all duration-200"
-          onClick={() => getInOnHoldIdeas()}
+
+      {isMenuOpen && (
+        <div
+          className="xl:hidden w-full bg-white flex flex-col items-center gap-6 font-semibold text-lg transition-transform"
+          style={{ transition: "transform 0.3s ease, opacity 0.3s ease" }}
         >
-          On Hold
-        </button>
-        <button
-          className="text-2xl bg-white hover:bg-grey-100 text-grey-800 font-semibold py-2 px-2 border-b-4 border-grey-600 rounded shadow active:bg-gray-300 active:border-grey-600 active:border-b-2 transition-all duration-200"
-          onClick={() => getInProgressIdeas()}
-        >
-          In Progres
-        </button>
-        <button
-          className="text-2xl bg-white hover:bg-grey-100 text-grey-800 font-semibold py-2 px-2 border-b-4 border-grey-600 rounded shadow active:bg-gray-300 active:border-grey-600 active:border-b-2 transition-all duration-200"
-          onClick={() => getCompletedIdeas()}
-        >
-          Completed
-        </button>
-        <button
-          className="text-2xl bg-white hover:bg-grey-100 text-grey-800 font-semibold py-2 px-2 border-b-4 border-grey-600 rounded shadow active:bg-gray-300 active:border-grey-600 active:border-b-2 transition-all duration-200"
-          onClick={() => getIdeas()}
-        >
-          All
-        </button>
-      </div>
+          <li
+            className="list-none w-full text-center p-4 hover:bg-indigo-700 hover:text-white rounded-md transition-all cursor-pointer"
+            onClick={() => getInOnHoldIdeas()}
+          >
+            On Hold
+          </li>
+          <li
+            className="list-none w-full text-center p-4 hover:bg-indigo-700 hover:text-white rounded-md transition-all cursor-pointer"
+            onClick={() => getInProgressIdeas()}
+          >
+            In Progress
+          </li>
+          <li
+            className="list-none w-full text-center p-4 hover:bg-indigo-700 hover:text-white rounded-md transition-all cursor-pointer"
+            onClick={() => getCompletedIdeas()}
+          >
+            Completed
+          </li>
+          <li
+            className="list-none w-full text-center p-4 hover:bg-indigo-700 hover:text-white rounded-md transition-all cursor-pointer"
+            onClick={() => getIdeas()}
+          >
+            All
+          </li>
+        </div>
+      )}
     </div>
   );
 };

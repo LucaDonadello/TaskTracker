@@ -25,12 +25,12 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
 
   const handleSaveDescription = (idea) => {
     const updatedIdea = {
-      title: editedTitle[idea.id] || idea.title, // Use the edited title if it exists
+      title: editedTitle[idea.id] || idea.title,
       status: idea.status,
       ideaDesc: editedDescriptions[idea.id] || idea.ideadesc,
     };
 
-    editIdea(idea.id, updatedIdea); // Save the updated idea
+    editIdea(idea.id, updatedIdea);
     toggleVisibility(idea.id);
   };
 
@@ -64,18 +64,6 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
 
   return (
     <div className="p-4">
-      <div className="p-4">
-        <div className="flex justify-between">
-          <p className="text-4xl font-bold mb-4">Ideas: </p>
-          <button
-            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
-            onClick={handleAdd}
-          >
-            ADD IDEA
-          </button>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 gap-4">
         {ideas.length === 0 ? (
           <div className="text-center text-2xl">No ideas found</div>
@@ -87,7 +75,11 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
             >
               <div className="flex justify-between items-center">
                 <input
-                  value={editedTitle[idea.id] !== undefined ? editedTitle[idea.id] : idea.title}
+                  value={
+                    editedTitle[idea.id] !== undefined
+                      ? editedTitle[idea.id]
+                      : idea.title
+                  }
                   onClick={() => toggleVisibility(idea.id)}
                   onChange={(e) => handleTitleChange(idea, e.target.value)}
                   type="text"
@@ -136,7 +128,11 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                   <textarea
                     className="border rounded p-2 w-full"
                     rows="4"
-                    value={editedDescriptions[idea.id] !== undefined ? editedDescriptions[idea.id] : idea.ideadesc}
+                    value={
+                      editedDescriptions[idea.id] !== undefined
+                        ? editedDescriptions[idea.id]
+                        : idea.ideadesc
+                    }
                     onChange={(e) =>
                       handleDescriptionChange(idea.id, e.target.value)
                     }
@@ -152,6 +148,14 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
             </div>
           ))
         )}
+      </div>
+      <div className="py-3">
+        <button
+          className=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
+          onClick={handleAdd}
+        >
+          ADD IDEA
+        </button>
       </div>
     </div>
   );
