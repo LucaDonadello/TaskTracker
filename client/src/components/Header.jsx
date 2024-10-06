@@ -12,7 +12,7 @@ const Header = ({
     <div className="relative flex flex-col">
       <div className="flex justify-between items-center text-black py-6 px-8 md:px-8 bg-white drop-shadow-md">
         <div className="justify justify-left text-5xl font-serif">
-          <p>Ideas Tracker</p>
+          <p>Tasks Tracker</p>
         </div>
         <ul className="hidden xl:flex items-center gap-12 font-semibold text-base">
           <li

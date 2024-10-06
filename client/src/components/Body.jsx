@@ -65,97 +65,97 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
   return (
     <div className="p-4">
       <div className="grid grid-cols-1 gap-4">
-        {ideas.length === 0 ? (
-          <div className="text-center text-2xl">No ideas found</div>
-        ) : (
-          ideas.map((idea) => (
-            <div
-              key={idea.id}
-              className="p-4 border rounded-lg shadow-md bg-white"
-            >
-              <div className="flex justify-between items-center">
-                <input
-                  value={
-                    editedTitle[idea.id] !== undefined
-                      ? editedTitle[idea.id]
-                      : idea.title
-                  }
-                  onClick={() => toggleVisibility(idea.id)}
-                  onChange={(e) => handleTitleChange(idea, e.target.value)}
-                  type="text"
-                  id={idea.id}
-                  className="text-lg text-black"
-                />
-                <div className="flex items-center gap-5">
-                  <select
-                    className={`text-sm font-semibold px-2 py-2 rounded ${
-                      (selectedStatuses[idea.id] || idea.status) === "Completed"
-                        ? "bg-green-100 text-green-800"
-                        : (selectedStatuses[idea.id] || idea.status) ===
-                          "On Hold"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-blue-100 text-blue-800"
-                    }`}
-                    value={selectedStatuses[idea.id] || idea.status}
-                    onChange={(e) => handleStatusChange(idea, e.target.value)}
-                  >
-                    {options.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="flex gap-1">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
-                      onClick={() => toggleVisibility(idea.id)}
-                    >
-                      {visibleIdeaId === idea.id
-                        ? "Hide Description"
-                        : "See Description"}
-                    </button>
-                    <button
-                      className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
-                      onClick={() => deleteIdea(idea.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-              {visibleIdeaId === idea.id && (
-                <div className="mt-4">
-                  <textarea
-                    className="border rounded p-2 w-full"
-                    rows="4"
-                    value={
-                      editedDescriptions[idea.id] !== undefined
-                        ? editedDescriptions[idea.id]
-                        : idea.ideadesc
-                    }
-                    onChange={(e) =>
-                      handleDescriptionChange(idea.id, e.target.value)
-                    }
-                  />
+        {ideas.map((idea) => (
+          <div
+            key={idea.id}
+            className="p-4 border rounded-lg shadow-md bg-white"
+          >
+            <div className="flex justify-between items-center">
+              <input
+                value={
+                  editedTitle[idea.id] !== undefined
+                    ? editedTitle[idea.id]
+                    : idea.title
+                }
+                onClick={() => toggleVisibility(idea.id)}
+                onChange={(e) => handleTitleChange(idea, e.target.value)}
+                type="text"
+                id={idea.id}
+                className="text-lg text-black"
+              />
+              <div className="flex items-center gap-5">
+                <select
+                  className={`text-sm font-semibold px-2 py-2 rounded ${
+                    (selectedStatuses[idea.id] || idea.status) === "Completed"
+                      ? "bg-green-100 text-green-800"
+                      : (selectedStatuses[idea.id] || idea.status) === "On Hold"
+                      ? "bg-yellow-100 text-yellow-800"
+                      : "bg-blue-100 text-blue-800"
+                  }`}
+                  value={selectedStatuses[idea.id] || idea.status}
+                  onChange={(e) => handleStatusChange(idea, e.target.value)}
+                >
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <div className="flex gap-1">
                   <button
-                    className="mt-2 bg-green-600 hover:bg-green-800 text-white font-bold py-1 px-2 rounded"
-                    onClick={() => handleSaveDescription(idea)}
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
+                    onClick={() => toggleVisibility(idea.id)}
                   >
-                    Save
+                    {visibleIdeaId === idea.id
+                      ? "Hide Description"
+                      : "See Description"}
+                  </button>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
+                    onClick={() => deleteIdea(idea.id)}
+                  >
+                    Delete
                   </button>
                 </div>
-              )}
+              </div>
             </div>
-          ))
-        )}
+            {visibleIdeaId === idea.id && (
+              <div className="mt-4">
+                <textarea
+                  className="border rounded p-2 w-full"
+                  rows="4"
+                  value={
+                    editedDescriptions[idea.id] !== undefined
+                      ? editedDescriptions[idea.id]
+                      : idea.ideadesc
+                  }
+                  onChange={(e) =>
+                    handleDescriptionChange(idea.id, e.target.value)
+                  }
+                />
+                <button
+                  className="mt-2 bg-green-600 hover:bg-green-800 text-white font-bold py-1 px-2 rounded"
+                  onClick={() => handleSaveDescription(idea)}
+                >
+                  Save
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-      <div className="py-3">
-        <button
-          className=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
-          onClick={handleAdd}
-        >
-          ADD IDEA
-        </button>
+      <div className={`grid grid-rows-2 ${ideas.length === 0 ? "place-items-center py-64" : ""}`}>
+        {ideas.length === 0 ? (
+          <div className="text-center text-3xl text-white">No Task found</div>
+        ) : null}
+        <div className={`py-3 ${ideas.length === 0 ? "text-center" : ""}`}>
+          <button
+            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
+            onClick={handleAdd}
+          >
+            ADD IDEA
+          </button>
+        </div>
       </div>
     </div>
   );
