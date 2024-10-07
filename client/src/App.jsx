@@ -1,5 +1,5 @@
-import { BrowserRouter } from "react-router-dom";
-import { Header, Body } from "./components";
+import { Routes, Route } from "react-router-dom";
+import { Header, Body, Login, Register } from "./components";
 import { useEffect, useState } from "react";
 
 const App = () => {
@@ -91,22 +91,43 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <div className="w-full min-h-screen absolute bg-gradient-to-r from-blue-400 to-emerald-400">
-        <Header
-          getCompletedIdeas={getCompletedIdeas}
-          getInOnHoldIdeas={getOnHoldIdeas}
-          getInProgressIdeas={getInProgressIdeas}
-          getIdeas={getIdeas}
-        />
-        <Body
-          ideas={ideas}
-          deleteIdea={deleteIdea}
-          editIdea={editIdea}
-          addIdea={addIdea}
-        />
-      </div>
-    </BrowserRouter>
+    <Routes>
+      <Route
+        path="/tracker"
+        element={
+          <div className="w-full min-h-screen absolute bg-gradient-to-r from-blue-400 to-emerald-400">
+            <Header
+              getCompletedIdeas={getCompletedIdeas}
+              getInOnHoldIdeas={getOnHoldIdeas}
+              getInProgressIdeas={getInProgressIdeas}
+              getIdeas={getIdeas}
+            />
+            <Body
+              ideas={ideas}
+              deleteIdea={deleteIdea}
+              editIdea={editIdea}
+              addIdea={addIdea}
+            />
+          </div>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <div className="w-full min-h-screen absolute bg-gradient-to-r from-blue-400 to-emerald-400">
+            <Login />
+          </div>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <div className="w-full min-h-screen absolute bg-gradient-to-r from-blue-400 to-emerald-400">
+            <Register />
+          </div>
+        }
+      />
+    </Routes>
   );
 };
 
