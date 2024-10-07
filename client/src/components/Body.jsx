@@ -5,6 +5,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
   const [editedDescriptions, setEditedDescriptions] = useState({});
   const [selectedStatuses, setSelectedStatuses] = useState({});
   const [editedTitle, setEditedTitle] = useState({});
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const options = [
     { value: "In Progress", label: "In Progress" },
@@ -96,12 +97,16 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                   onChange={(e) => handleStatusChange(idea, e.target.value)}
                 >
                   {options.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option
+                      key={option.value}
+                      value={option.value}
+                      className="text-sm font-semibold px-2 py-2 rounded bg-white text-black"
+                    >
                       {option.label}
                     </option>
                   ))}
                 </select>
-                <div className="flex gap-1">
+                <div className="hidden xl:flex gap-1">
                   <button
                     className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
                     onClick={() => toggleVisibility(idea.id)}
@@ -117,6 +122,10 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                     Delete
                   </button>
                 </div>
+                <i
+                  className="bx bx-plus-medical xl:hidden block text-3xl cursor-pointer px"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                ></i>
               </div>
             </div>
             {visibleIdeaId === idea.id && (
@@ -141,10 +150,39 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                 </button>
               </div>
             )}
+            {isMenuOpen && (
+              <div
+                className="xl:hidden w-full bg-white flex flex-col items-center gap-6 font-semibold rounded text-lg transition-transform py-4"
+                style={{
+                  transition: "transform 0.3s ease, opacity 0.3s ease",
+                }}
+              >
+                <li
+                  className="list-none w-full text-center p-4 hover:bg-indigo-700 hover:text-white rounded-md transition-all cursor-pointer"
+                  onClick={() => toggleVisibility(idea.id)}
+                >
+                  {visibleIdeaId === idea.id
+                    ? "Hide Description"
+                    : "See Description"}
+                </li>
+                <li
+                  className="list-none w-full text-center p-4 hover:bg-indigo-700 hover:text-white rounded-md transition-all cursor-pointer"
+                  onClick={() => deleteIdea(idea.id)}
+                >
+                  Delete
+                </li>
+              </div>
+            )}
           </div>
         ))}
       </div>
-      <div className={`grid grid-rows-2 ${ideas.length === 0 ? "place-items-center py-64" : ""}`}>
+      <div
+        className={`${
+          ideas.length === 0
+            ? "flex flex-col items-center justify-center min-h-screen"
+            : ""
+        }`}
+      >
         {ideas.length === 0 ? (
           <div className="text-center text-3xl text-white">No Task found</div>
         ) : null}
@@ -153,7 +191,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
             className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
             onClick={handleAdd}
           >
-            ADD IDEA
+            ADD TASK
           </button>
         </div>
       </div>

@@ -92,7 +92,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="w-full h-full absolute bg-gradient-to-r from-blue-400 to-emerald-400">
+      <div className="w-full min-h-screen absolute bg-gradient-to-r from-blue-400 to-emerald-400">
         <Header
           getCompletedIdeas={getCompletedIdeas}
           getInOnHoldIdeas={getOnHoldIdeas}
