@@ -5,7 +5,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
   const [editedDescriptions, setEditedDescriptions] = useState({});
   const [selectedStatuses, setSelectedStatuses] = useState({});
   const [editedTitle, setEditedTitle] = useState({});
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuOpenId, setIsMenuOpen] = useState(null);
 
   const options = [
     { value: "In Progress", label: "In Progress" },
@@ -15,6 +15,10 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
 
   const toggleVisibility = (id) => {
     setVisibleIdeaId(visibleIdeaId === id ? null : id);
+  };
+
+  const toggleVisibilityMenu = (id) => {
+    setIsMenuOpen(menuOpenId === id ? null : id);
   };
 
   const handleDescriptionChange = (id, newDescription) => {
@@ -82,9 +86,9 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                 onChange={(e) => handleTitleChange(idea, e.target.value)}
                 type="text"
                 id={idea.id}
-                className="text-lg text-black"
+                className="text-lg text-black w-full max-w-xs"
               />
-              <div className="flex items-center gap-5">
+              <div className="flex items-center ">
                 <select
                   className={`text-sm font-semibold px-2 py-2 rounded ${
                     (selectedStatuses[idea.id] || idea.status) === "Completed"
@@ -106,7 +110,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                     </option>
                   ))}
                 </select>
-                <div className="hidden xl:flex gap-1">
+                <div className="hidden md:flex gap-1 pl-2">
                   <button
                     className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded active:bg-blue-300 active:border-blue-600 active:border-b-2 transition-all duration-200"
                     onClick={() => toggleVisibility(idea.id)}
@@ -123,8 +127,8 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                   </button>
                 </div>
                 <i
-                  className="bx bx-plus-medical xl:hidden block text-3xl cursor-pointer px"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="bx bx-menu-alt-right md:hidden block text-3xl cursor-pointer px"
+                  onClick={() => toggleVisibilityMenu(idea.id)}
                 ></i>
               </div>
             </div>
@@ -150,7 +154,7 @@ const Body = ({ ideas, deleteIdea, editIdea, addIdea }) => {
                 </button>
               </div>
             )}
-            {isMenuOpen && (
+            {menuOpenId === idea.id && (
               <div
                 className="xl:hidden w-full bg-white flex flex-col items-center gap-6 font-semibold rounded text-lg transition-transform py-4"
                 style={{
