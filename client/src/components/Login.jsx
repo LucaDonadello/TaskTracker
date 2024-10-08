@@ -2,7 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
-const LOGIN_URL = "/auth"; // Need to meet the backend API endpoint
+
+const LOGIN_URL = "/auth/login";
 
 function Login() {
   const { setAuth } = useContext(AuthContext);
@@ -16,7 +17,7 @@ function Login() {
 
   // Focus on the user input field when the page loads
   useEffect(() => {
-    //userRef.current.focus();
+    userRef.current.focus();
   }, []);
 
   // Clear error message when user or password changes
@@ -27,20 +28,29 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(LOGIN_URL, JSON.stringify({ user, pwd }), {
+      const loginData = { username: user, password: pwd };
+      console.log("Sending login data:", loginData);
+  
+      const res = await axios.post(LOGIN_URL, JSON.stringify(loginData), {
         headers: {
           "Content-Type": "application/json",
-          withCredentials: true,
         },
+        withCredentials: true,
       });
-      const accessToken = res?.data?.accessToken;
-      const roles = res?.data?.roles;
-      setAuth({ user, pwd, roles, accessToken });
+  
+      const accessToken = res?.data?.token;
+      const roles = res?.data?.roles || [];
+  
+      setAuth({ user, roles, accessToken });
+      console.log("Setting auth with:", { user, roles, accessToken });
+      console.log("Response from server:", res.data);
       setUser("");
       setPwd("");
-      navigate("/tracker");
+
+      // Navigate to the tracker after a short delay for debugging
+      setTimeout(() => navigate("/tracker"), 100);
     } catch (err) {
-      if (!err?.response?.data) {
+      if (!err?.response) {
         setErrMsg("Server error. Please try again later.");
       } else if (err.response.status === 400) {
         setErrMsg("Missing Username or Password");
