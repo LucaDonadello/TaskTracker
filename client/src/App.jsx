@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate} from "react-router-dom";
 import { Header, Body, Login, Register, ProtectedRoute} from "./components";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "./context/AuthProvider";
@@ -87,6 +87,7 @@ const App = () => {
 
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/login" />}/>
       <Route
         path="/tracker"
         element={

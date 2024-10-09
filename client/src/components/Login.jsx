@@ -29,8 +29,6 @@ function Login() {
     e.preventDefault();
     try {
       const loginData = { username: user, password: pwd };
-      console.log("Sending login data:", loginData);
-  
       const res = await axios.post(LOGIN_URL, JSON.stringify(loginData), {
         headers: {
           "Content-Type": "application/json",
@@ -42,8 +40,6 @@ function Login() {
       const roles = res?.data?.roles || [];
   
       setAuth({ user, roles, accessToken });
-      console.log("Setting auth with:", { user, roles, accessToken });
-      console.log("Response from server:", res.data);
       setUser("");
       setPwd("");
 
@@ -77,7 +73,6 @@ function Login() {
         >
           {errMsg}
         </p>
-
         <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
           Login
         </h1>

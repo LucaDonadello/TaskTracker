@@ -8,6 +8,12 @@ const Header = ({
 }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    window.location.href = '/login';
+  };
+  
+
   return (
     <div className="relative flex flex-col">
       <div className="flex justify-between items-center text-black py-6 px-8 md:px-8 bg-white drop-shadow-md">
@@ -38,6 +44,9 @@ const Header = ({
             onClick={() => getIdeas()}
           >
             All
+          </li>
+          <li className="p-3 hover:bg-indigo-700 hover:text-white rounded-md transition-all duration-200">
+            <i className="bx bx-log-out text-2xl" onClick={handleLogout}></i>
           </li>
         </ul>
         <i
@@ -74,6 +83,10 @@ const Header = ({
             onClick={() => getIdeas()}
           >
             All
+          </li>
+          <li className="list-none w-full text-center p-4 hover:bg-indigo-700 hover:text-white rounded-md transition-all cursor-pointer">
+            <i className="bx bx-log-out text-2xl w-full text-center"
+              onClick={handleLogout}></i>
           </li>
         </div>
       )}

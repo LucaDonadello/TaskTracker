@@ -1,14 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../api/axios"; // Adjust the path based on your file structure
-import { useState } from "react";
+import axios from "../api/axios";
+import { useState, useEffect} from "react";
 
-const REGISTER_URL = "/auth/register"; // Your backend registration endpoint
+const REGISTER_URL = "/auth/register";
 
 function Register() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    setErrorMsg("");
+  }, [username, password]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -30,8 +34,17 @@ function Register() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-emerald-400">
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
+      <p
+          className={`${
+            errMsg
+              ? "errmsg bg-red-500 text-white p-4 rounded-lg shadow-lg animate-slideDown"
+              : "offscreen"
+          }`}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </p>
         <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Register</h1>
-        {errorMsg && <p className="text-red-500 text-center mb-4">{errorMsg}</p>}
         <form onSubmit={handleRegister}>
           <div className="mb-4">
             <label
