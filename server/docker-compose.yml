@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      CLIENT_URL: "http://host.docker.internal:5173"
+      JWT_SECRET: "${JWT_SECRET}"
+      DATABASE_URL: "postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}"  # Updated here
+      NODE_ENV: "development"
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app  # Mount the app source code
+    restart: always
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data  # Persist PostgreSQL data
+    restart: always
+
+volumes:
+  db-data:  # Define the volume for PostgreSQL data persistence
