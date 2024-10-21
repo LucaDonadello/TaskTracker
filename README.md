@@ -12,6 +12,7 @@ Managing ideas across multiple projects can be overwhelming, especially when lac
 - Tailwind CSS:Provides a responsive design, ensuring smooth functionality across different screen sizes.
 - JavaScript & HTML:Core technologies for developing a functional and interactive web interface.
 - REST API:Facilitates communication between the frontend and backend, ensuring a scalable and modular architecture.
+- JWT Authentication: Implemented secure user authentication and authorization, allowing for seamless login and registration processes.
 
 ## Issues Encountered and Solutions ⚙️  
 - Database Management:Managing large sets of ideas with PostgreSQL required optimizing database queries and indexing, ensuring quick access and retrieval of data.
