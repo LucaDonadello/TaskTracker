@@ -1,4 +1,4 @@
-# Project Title: Idea Tracker App
+# Project Title: Task Tracker App
 ## Abstract 📝  
 The Idea Tracker App is a web application designed to help users organize and manage their ideas by storing titles, descriptions, and key details in a centralized system. It utilizes React for the frontend and a REST API powered by Node.js and Express.js for the backend, with PostgreSQL as the database for storing user data. Tailwind CSS ensures a responsive, visually appealing interface, while JavaScript and HTML provide robust functionality.
 
