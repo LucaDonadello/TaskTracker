@@ -8,7 +8,7 @@ async function start() {
     
     // Enable CORS
     app.use(cors({
-        origin: 'http://localhost:3000', // Replace with your front-end URL
+        origin: 'http://localhost:3000', 
         credentials: true, // Allow credentials (e.g., cookies)
     }));
 
